@@ -1,37 +1,75 @@
-"use client"
-
-import { useState } from "react"
-import "./Header.css"
+import { useState, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import "./Header.css";
+import { useSelector } from "react-redux";
 
 function Header({ onSearch }) {
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const location = useLocation();
+  const user = useSelector((state) => state.user.user);
+  const handleSearchChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setSearchValue(value);
+      setIsSearching(true);
 
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value)
-    onSearch(e.target.value)
-  }
+      const timeoutId = setTimeout(() => {
+        onSearch(value);
+        setIsSearching(false);
+      }, 300);
+
+      return () => clearTimeout(timeoutId);
+    },
+    [onSearch]
+  );
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      window.location.href = "https://uap-pi.vercel.app/login";
+    }
+  };
 
   return (
     <header className="header">
       <div className="header-container">
-        <div className="logo">
+        <Link to="/" className="logo">
           <span className="logo-text">UAPages</span>
-        </div>
+        </Link>
 
         <nav className="nav-menu">
-          <a href="#" className="nav-item nav-item-active">
+          <Link
+            to="/"
+            className={`nav-item ${
+              location.pathname === "/" ? "nav-item-active" : ""
+            }`}
+          >
             Home
-          </a>
-          <a href="#" className="nav-item">
+          </Link>
+          <Link
+            to="/explore"
+            className={`nav-item ${
+              location.pathname === "/explore" ? "nav-item-active" : ""
+            }`}
+          >
             Explore
-          </a>
-          <a href="#" className="nav-item">
+          </Link>
+          <Link
+            to="/create"
+            className={`nav-item ${
+              location.pathname === "/create" ? "nav-item-active" : ""
+            }`}
+          >
             Create
-          </a>
+          </Link>
         </nav>
 
         <div className="search-container">
-          <div className="search-wrapper">
+          <div
+            className={`search-wrapper ${isSearching ? "is-searching" : ""}`}
+          >
             <svg
               className="search-icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +89,13 @@ function Header({ onSearch }) {
               placeholder="Search"
               value={searchValue}
               onChange={handleSearchChange}
+              aria-label="Search pins"
             />
+            {isSearching && (
+              <div className="search-loading">
+                <div className="loading-spinner"></div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -83,7 +127,7 @@ function Header({ onSearch }) {
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
           </button>
-          <button className="icon-button">
+          <button className="icon-button" onClick={handleLogin}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -94,6 +138,7 @@ function Header({ onSearch }) {
               strokeLinejoin="round"
             >
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </button>
@@ -114,7 +159,7 @@ function Header({ onSearch }) {
         </div>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;
