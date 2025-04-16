@@ -1,0 +1,266 @@
+/* PinModal.css */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 16px;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 32px;
+  max-width: 1024px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .modal-container {
+    flex-direction: row;
+  }
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modal-close-button:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-close-button svg {
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+
+.modal-image-section {
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .modal-image-section {
+    width: 50%;
+  }
+}
+
+.modal-image {
+  max-height: 70vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.modal-content-section {
+  padding: 24px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .modal-content-section {
+    width: 50%;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.modal-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.modal-action-button:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-action-button svg {
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal-description {
+  color: #5f5f5f;
+  margin-bottom: 24px;
+}
+
+.modal-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.modal-user-info {
+  flex: 1;
+}
+
+.modal-user-name {
+  font-weight: 500;
+}
+
+.modal-user-role {
+  font-size: 12px;
+  color: #5f5f5f;
+}
+
+.modal-follow-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 24px;
+  background-color: #f0f0f0;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modal-follow-button:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.modal-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal-stat svg {
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.modal-tag {
+  padding: 4px 12px;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.modal-tag:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-comments {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 16px;
+}
+
+.modal-comments-title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.modal-comment {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.modal-comment-content {
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  padding: 8px 16px;
+  flex: 1;
+}
+
+.modal-comment-user {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.modal-comment-text {
+  font-size: 14px;
+}
+
+.modal-comment-input-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-comment-input {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 24px;
+  background-color: #f0f0f0;
+  font-size: 16px;
+  outline: none;
+}
+
+.modal-comment-input:focus {
+  box-shadow: 0 0 0 2px rgba(230, 0, 35, 0.1);
+}
