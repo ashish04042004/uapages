@@ -1,13 +1,40 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./userActions"; // Assuming you're using Redux to manage state
 import "./Header.css";
-import { useSelector } from "react-redux";
 
 function Header({ onSearch }) {
   const [searchValue, setSearchValue] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+
+  // Function to check if user is logged in via cookie
+  const checkLoginStatus = () => {
+    const tokenCookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("uapToken="));
+
+    if (tokenCookie) {
+      const tokenValue = tokenCookie.split("=")[1];
+      try {
+        const { user, token } = JSON.parse(decodeURIComponent(tokenValue));
+        if (user && token) {
+          dispatch(setUser(user, token)); // Dispatch user info to the Redux store
+        }
+      } catch (error) {
+        console.error("Error parsing user from cookie", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatus(); // Check login status on initial load
+  }, []);
+
   const handleSearchChange = useCallback(
     (e) => {
       const value = e.target.value;
@@ -23,11 +50,12 @@ function Header({ onSearch }) {
     },
     [onSearch]
   );
-  const navigate = useNavigate();
+
   const handleLogin = () => {
     if (user) {
       navigate("/dashboard");
     } else {
+      // Redirect to the login page
       window.location.href = "https://uap-pi.vercel.app/login";
     }
   };
